@@ -150,17 +150,11 @@ npm run build:demo
 
 Then serve the repository root with any static server and open `demo/index.html`.
 
-## Product direction
+## Demonstration boundary
 
-The engine remains a focused calculation package. Product capabilities are built around it in the standalone browser application.
+The browser builder is a quick, working example of the reusable engine. Its visible controls are intentionally focused so a visitor can understand the core idea without learning a full business system.
 
-**Current V1.2 milestone: a more usable pricing builder**
-
-- dropdown questions exposed in the builder;
-- proactive configuration-readiness feedback;
-- clearer setup before customer quote preview.
-
-Future development may add stronger conditions, saved business configurations, quote-request delivery, booking/CRM adapters, the Location Service Area Toolkit, or payments when a real workflow requires them. The builder is a standalone business tool, not a website-code generator.
+The demo's feature list is not a statement of the developer's maximum capabilities. Production implementations can use the same engine with different interfaces, richer pricing policies, employee workflows, customer requests, booking, CRM, payments, the Location Service Area Toolkit, or other integrations. Those application-specific capabilities stay outside the generic calculation core.
 
 ## Cloudflare deployment
 
