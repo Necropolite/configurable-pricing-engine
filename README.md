@@ -133,7 +133,7 @@ The repository includes a browser-based demonstration under `demo/`. It uses the
 - a lawn service;
 - a creative studio.
 
-The demo makes the module boundary visible: business labels, prices, inputs, and rules change while `calculateQuote` remains untouched. Every result is calculated locally and displayed as an itemized quote.
+The public experience leads with the customer benefit: turning a business's existing pricing process into fast, consistent, itemized quotes for customers or staff. Technical reviewers can also inspect the active configuration to see the module boundary: business labels, prices, inputs, and rules change while `calculateQuote` remains untouched.
 
 Build the demo with:
 
