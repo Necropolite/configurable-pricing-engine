@@ -182,7 +182,9 @@ Deliberately excluded until a real consumer requires them:
 
 ## Status
 
-**V1 extracted.** The same engine behavior was previously verified inside LocksmithOS with all pricing tests passing and a full Next.js production build succeeding. The standalone repository still needs its own fresh `npm install`, `npm test`, and `npm run build` after extraction before the extraction itself is marked independently verified.
+**V1 independently verified complete on August 23, 2026.** Standalone validation passed all 9 package tests, `npm run build` completed successfully with TypeScript, and `npm install` reported 0 vulnerabilities.
+
+The same engine behavior was also verified inside LocksmithOS before extraction, where all integrated pricing tests passed and the full Next.js production build succeeded.
 
 ## Consumer integration
 
