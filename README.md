@@ -11,7 +11,7 @@ The engine accepts:
 1. a pricing catalog describing items and pricing rules;
 2. a quote request containing an item, quantity, and generic attributes.
 
-It returns an itemized quote and final total.
+It returns an itemized quote and final total. Optional input definitions describe the questions a quote interface should ask and validate, allowing the same catalog to drive both calculation and form generation.
 
 The core has no dependency on UI, maps, payments, databases, dispatch systems, React, Next.js, or any specific business domain.
 
@@ -52,6 +52,7 @@ Each catalog declares its own currency code, such as `USD`.
 interface PricingCatalog {
   currency: string;
   items: PricingItem[];
+  inputs?: PricingInput[];
   rules?: PricingRule[];
 }
 
@@ -125,17 +126,21 @@ const quote = calculateQuote(pricing, {
 
 See `examples/lawn-service.ts` for the complete example.
 
-## Interactive demo
+## Pricing Tool Builder
 
-The repository includes a browser-based demonstration under `demo/`. It uses the real TypeScript engine and swaps only the serializable catalog configuration to calculate quotes for three unrelated examples:
+The browser application under `demo/` is a usable configuration layer around the engine. A business owner can:
 
-- a mobile locksmith;
-- a lawn service;
-- a creative studio.
+- create services and base prices;
+- define number, yes/no, and multiple-choice customer questions;
+- add fixed, per-unit, conditional, and percentage rules;
+- preview the generated customer quote form;
+- see an itemized estimate calculated by the real engine;
+- save work automatically in the browser;
+- import and export portable JSON pricing configurations.
 
-The public experience leads with the customer benefit: turning a business's existing pricing process into fast, consistent, itemized quotes for customers or staff. Technical reviewers can also inspect the active configuration to see the module boundary: business labels, prices, inputs, and rules change while `calculateQuote` remains untouched.
+The builder is intentionally separate from the calculation core. Applications can use the engine and input schema without adopting this interface.
 
-Build the demo with:
+Build the tool with:
 
 ```powershell
 npm run build:demo
@@ -200,7 +205,9 @@ Deliberately excluded until a real consumer requires them:
 
 ## Status
 
-**V1 independently verified complete on August 23, 2026.** Standalone validation passed all 9 package tests, `npm run build` completed successfully with TypeScript, and `npm install` reported 0 vulnerabilities.
+**V1.1 pricing-input schema and browser builder added on August 23, 2026.** The input schema is optional, so existing V1 catalogs and LocksmithOS integration remain backward-compatible.
+
+**V1 core was independently verified complete on August 23, 2026.** Standalone validation passed all 9 package tests, `npm run build` completed successfully with TypeScript, and `npm install` reported 0 vulnerabilities.
 
 The same engine behavior was also verified inside LocksmithOS before extraction, where all integrated pricing tests passed and the full Next.js production build succeeded.
 
