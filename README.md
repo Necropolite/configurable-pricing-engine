@@ -131,7 +131,7 @@ See `examples/lawn-service.ts` for the complete example.
 The browser application under `demo/` is a usable configuration layer around the engine. A business owner can:
 
 - create services and base prices;
-- define number, yes/no, and multiple-choice customer questions;
+- define number and yes/no customer questions in the no-code builder;
 - add fixed, per-unit, conditional, and percentage rules;
 - preview the generated customer quote form;
 - see an itemized estimate calculated by the real engine;
@@ -187,6 +187,7 @@ Included:
 - per-unit pricing with included allowances;
 - percentage modifiers;
 - simple conditional rules;
+- optional number, yes/no, and select input definitions for generated interfaces;
 - itemized quote results;
 - configuration/request validation;
 - multiple currency codes without currency conversion.
