@@ -152,16 +152,15 @@ Then serve the repository root with any static server and open `demo/index.html`
 
 ## Product direction
 
-The engine remains a focused calculation package. Product capabilities are built around it in the browser application.
+The engine remains a focused calculation package. Product capabilities are built around it in the standalone browser application.
 
-**Current V1.2 milestone: publishable quote forms**
+**Current V1.2 milestone: a more usable pricing builder**
 
 - dropdown questions exposed in the builder;
 - proactive configuration-readiness feedback;
-- generated embed code for a customer-only quote form;
-- local, itemized calculation using the same engine and catalog.
+- clearer setup before customer quote preview.
 
-Future milestones should be driven by a real integration and may include opt-in hosted configurations, quote-request delivery, booking/CRM adapters, the Location Service Area Toolkit, and payments. These belong outside the core engine so generic pricing behavior stays portable and deterministic.
+Future development may add stronger conditions, saved business configurations, quote-request delivery, booking/CRM adapters, the Location Service Area Toolkit, or payments when a real workflow requires them. The builder is a standalone business tool, not a website-code generator.
 
 ## Cloudflare deployment
 
@@ -232,7 +231,7 @@ Deliberately excluded until a real consumer requires them:
 
 ## Status
 
-**V1.2 publishable quote-form milestone added on August 23, 2026.** The builder now exposes dropdown questions, publishing validation, and generated embed code for a customer-facing form.
+**V1.2 builder usability milestone added on August 23, 2026.** The builder now exposes dropdown questions and proactive configuration-readiness feedback.
 
 **V1.1 pricing-input schema and browser builder added on August 23, 2026.** The input schema is optional, so existing V1 catalogs and LocksmithOS integration remain backward-compatible.
 
