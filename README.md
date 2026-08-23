@@ -131,14 +131,12 @@ See `examples/lawn-service.ts` for the complete example.
 The browser application under `demo/` is a usable configuration layer around the engine. A business owner can:
 
 - create services and base prices;
-- define number, yes/no, and dropdown customer questions in the no-code builder;
+- define number and yes/no customer questions in the no-code builder;
 - add fixed, per-unit, conditional, and percentage rules;
 - preview the generated customer quote form;
 - see an itemized estimate calculated by the real engine;
 - save work automatically in the browser;
-- import and export portable JSON pricing configurations;
-- validate publishing blockers directly in the editor;
-- generate copyable embed code for a customer-facing quote form.
+- import and export portable JSON pricing configurations.
 
 The builder is intentionally separate from the calculation core. Applications can use the engine and input schema without adopting this interface.
 
@@ -224,8 +222,6 @@ Deliberately excluded until a real consumer requires them:
 - arbitrary executable pricing callbacks.
 
 ## Status
-
-**V1.2 builder usability milestone added on August 23, 2026.** The builder now exposes dropdown questions and proactive configuration-readiness feedback.
 
 **V1.1 pricing-input schema and browser builder added on August 23, 2026.** The input schema is optional, so existing V1 catalogs and LocksmithOS integration remain backward-compatible.
 
