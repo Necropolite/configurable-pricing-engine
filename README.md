@@ -125,6 +125,24 @@ const quote = calculateQuote(pricing, {
 
 See `examples/lawn-service.ts` for the complete example.
 
+## Interactive demo
+
+The repository includes a browser-based demonstration under `demo/`. It uses the real TypeScript engine and swaps only the serializable catalog configuration to calculate quotes for three unrelated examples:
+
+- a mobile locksmith;
+- a lawn service;
+- a creative studio.
+
+The demo makes the module boundary visible: business labels, prices, inputs, and rules change while `calculateQuote` remains untouched. Every result is calculated locally and displayed as an itemized quote.
+
+Build the demo with:
+
+```powershell
+npm run build:demo
+```
+
+Then serve the repository root with any static server and open `demo/index.html`.
+
 ## Validation
 
 V1 rejects invalid configurations and requests instead of silently guessing. This includes:
