@@ -2,4 +2,3 @@ node_modules/
 dist/
 *.tsbuildinfo
 demo/app.js
-demo/embed.js
