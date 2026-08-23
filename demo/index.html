@@ -1,15 +1,64 @@
 <!doctype html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Interactive demonstration of a reusable, configuration-driven TypeScript pricing engine."><title>Configurable Pricing Engine</title><link rel="stylesheet" href="styles.css"></head>
-<body><main>
-  <header><a class="brand" href="#">Clint Ramey <span>/ Engine Lab</span></a><a class="repo" href="https://github.com/Necropolite/configurable-pricing-engine">View source</a></header>
-  <section class="intro"><p class="eyebrow">Reusable TypeScript module</p><h1>One pricing engine.<br><em>Different businesses.</em></h1><p>Change the business and inputs. The interface swaps configuration, while the calculation engine stays exactly the same.</p></section>
-  <section class="workspace" aria-label="Interactive quote builder">
-    <div class="controls"><div class="section-title"><span>01</span><div><h2>Configure a quote</h2><p>Try the same engine in three unrelated businesses.</p></div></div>
-      <label>Business example<select id="scenario"></select></label><label>Service<select id="item"></select></label><div id="fields" class="fields"></div>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="See how your business pricing rules can become a fast, consistent quote calculator for customers or staff.">
+  <title>Interactive Quote Builder | Clint Ramey</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main>
+  <header>
+    <a class="brand" href="https://clintramey.dev">Clint Ramey <span>/ Quote Builder</span></a>
+    <a class="repo" href="https://github.com/Necropolite/configurable-pricing-engine">View technical source</a>
+  </header>
+
+  <section class="intro">
+    <p class="eyebrow">Interactive quote builder</p>
+    <h1>Turn your pricing rules into <em>instant, consistent quotes.</em></h1>
+    <p>If you currently calculate prices from memory, notes, or a spreadsheet, I can turn that process into a dependable tool for your customers or employees.</p>
+    <a class="primary-action" href="#demo">Try a live example <span aria-hidden="true">↓</span></a>
+  </section>
+
+  <section class="benefits" aria-label="Business benefits">
+    <div><strong>Quote faster</strong><span>Give an estimate without repeating the same math.</span></div>
+    <div><strong>Reduce mistakes</strong><span>Apply the same prices and fees every time.</span></div>
+    <div><strong>Explain the price</strong><span>Show customers exactly what produced the total.</span></div>
+  </section>
+
+  <section class="workspace" id="demo" aria-label="Interactive quote builder">
+    <div class="controls">
+      <div class="section-title"><span>01</span><div><h2>Build a sample quote</h2><p>Choose a business, then change the details.</p></div></div>
+      <label>Business example<select id="scenario"></select></label>
+      <label>Service<select id="item"></select></label>
+      <div id="fields" class="fields"></div>
     </div>
-    <div class="result" aria-live="polite"><div class="result-head"><div><span>Live result</span><h2>Itemized quote</h2></div><span id="status" class="status">Calculated locally</span></div><div id="lines"></div><div class="total"><span>Total</span><strong id="total">$0.00</strong></div><p class="privacy">No server, database, or external API. Every quote is calculated in your browser.</p></div>
+    <div class="result" aria-live="polite">
+      <div class="result-head"><div><span>Updates automatically</span><h2>Customer quote</h2></div><span id="status" class="status">Calculated instantly</span></div>
+      <div id="lines"></div>
+      <div class="total"><span>Estimated total</span><strong id="total">$0.00</strong></div>
+      <p class="privacy">This example runs entirely in your browser. A finished version could also connect to booking, email, payments, or your existing business software.</p>
+    </div>
   </section>
-  <section class="explain"><div class="section-title"><span>02</span><div><h2>What this demonstrates</h2><p>The business changes. The core does not.</p></div></div><div class="cards"><article><b>Serializable rules</b><p>Prices, conditions, included units, and percentages live in plain configuration.</p></article><article><b>Transparent output</b><p>Every applied rule becomes an itemized line instead of a mysterious final number.</p></article><article><b>Safe money handling</b><p>Amounts use integer cents and invalid requests fail clearly instead of guessing.</p></article></div>
-    <details><summary>See the active configuration <span>+</span></summary><pre id="config"></pre></details>
+
+  <section class="explain">
+    <div class="section-title"><span>02</span><div><h2>Built around how your business already works</h2><p>You provide the rules. The tool applies them consistently.</p></div></div>
+    <div class="cards">
+      <article><b>Your services and prices</b><p>Base prices, quantities, mileage, included allowances, and optional services can follow your real pricing process.</p></article>
+      <article><b>Your conditions and fees</b><p>After-hours charges, rush work, markups, and other rules apply only when the quote calls for them.</p></article>
+      <article><b>Your workflow</b><p>Use it on your website, give it to employees, or connect it to booking, payments, email, or a CRM.</p></article>
+    </div>
+    <details><summary>For developers: see the active configuration <span>+</span></summary><pre id="config"></pre></details>
   </section>
-</main><script src="app.js"></script></body></html>
+
+  <section class="cta">
+    <p class="eyebrow">Adapt it to your business</p>
+    <h2>Your pricing process does not have to stay in your head.</h2>
+    <p>Tell me how you calculate a quote today. I can map the services, decisions, and fees into a tool shaped around your workflow.</p>
+    <a class="primary-action light" href="https://clintramey.dev/#contact">Talk through your quoting process <span aria-hidden="true">→</span></a>
+  </section>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
