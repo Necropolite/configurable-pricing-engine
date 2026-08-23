@@ -1,64 +1,12 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="See how your business pricing rules can become a fast, consistent quote calculator for customers or staff.">
-  <title>Interactive Quote Builder | Clint Ramey</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-<main>
-  <header>
-    <a class="brand" href="https://clintramey.dev">Clint Ramey <span>/ Quote Builder</span></a>
-    <a class="repo" href="https://github.com/Necropolite/configurable-pricing-engine">View technical source</a>
-  </header>
-
-  <section class="intro">
-    <p class="eyebrow">Interactive quote builder</p>
-    <h1>Turn your pricing rules into <em>instant, consistent quotes.</em></h1>
-    <p>If you currently calculate prices from memory, notes, or a spreadsheet, I can turn that process into a dependable tool for your customers or employees.</p>
-    <a class="primary-action" href="#demo">Try a live example <span aria-hidden="true">↓</span></a>
-  </section>
-
-  <section class="benefits" aria-label="Business benefits">
-    <div><strong>Quote faster</strong><span>Give an estimate without repeating the same math.</span></div>
-    <div><strong>Reduce mistakes</strong><span>Apply the same prices and fees every time.</span></div>
-    <div><strong>Explain the price</strong><span>Show customers exactly what produced the total.</span></div>
-  </section>
-
-  <section class="workspace" id="demo" aria-label="Interactive quote builder">
-    <div class="controls">
-      <div class="section-title"><span>01</span><div><h2>Build a sample quote</h2><p>Choose a business, then change the details.</p></div></div>
-      <label>Business example<select id="scenario"></select></label>
-      <label>Service<select id="item"></select></label>
-      <div id="fields" class="fields"></div>
-    </div>
-    <div class="result" aria-live="polite">
-      <div class="result-head"><div><span>Updates automatically</span><h2>Customer quote</h2></div><span id="status" class="status">Calculated instantly</span></div>
-      <div id="lines"></div>
-      <div class="total"><span>Estimated total</span><strong id="total">$0.00</strong></div>
-      <p class="privacy">This example runs entirely in your browser. A finished version could also connect to booking, email, payments, or your existing business software.</p>
-    </div>
-  </section>
-
-  <section class="explain">
-    <div class="section-title"><span>02</span><div><h2>Built around how your business already works</h2><p>You provide the rules. The tool applies them consistently.</p></div></div>
-    <div class="cards">
-      <article><b>Your services and prices</b><p>Base prices, quantities, mileage, included allowances, and optional services can follow your real pricing process.</p></article>
-      <article><b>Your conditions and fees</b><p>After-hours charges, rush work, markups, and other rules apply only when the quote calls for them.</p></article>
-      <article><b>Your workflow</b><p>Use it on your website, give it to employees, or connect it to booking, payments, email, or a CRM.</p></article>
-    </div>
-    <details><summary>For developers: see the active configuration <span>+</span></summary><pre id="config"></pre></details>
-  </section>
-
-  <section class="cta">
-    <p class="eyebrow">Adapt it to your business</p>
-    <h2>Your pricing process does not have to stay in your head.</h2>
-    <p>Tell me how you calculate a quote today. I can map the services, decisions, and fees into a tool shaped around your workflow.</p>
-    <a class="primary-action light" href="https://clintramey.dev/#contact">Talk through your quoting process <span aria-hidden="true">→</span></a>
-  </section>
-</main>
-<script src="app.js"></script>
-</body>
-</html>
+<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Build a reusable pricing catalog and test the customer quote experience."><title>Pricing Tool Builder | Clint Ramey</title><link rel="stylesheet" href="styles.css"></head><body><main>
+<header><a class="brand" href="https://clintramey.dev">Clint Ramey <span>/ Pricing Tool Builder</span></a><div><button id="load-example" class="text-button">Load example</button><a class="repo" href="https://github.com/Necropolite/configurable-pricing-engine">Source</a></div></header>
+<section class="intro"><p class="eyebrow">Working pricing tool</p><h1>Build the rules once.<br><em>Quote consistently.</em></h1><p>Create services, customer questions, and pricing rules without editing code. Then test the exact itemized quote your customer or employee would see.</p></section>
+<nav class="tabs" aria-label="Pricing tool views"><button class="active" data-tab="setup">1. Pricing setup</button><button data-tab="preview">2. Customer quote</button><button data-tab="transfer">3. Save or transfer</button></nav>
+<section id="setup" class="panel active"><div class="panel-heading"><div><p class="eyebrow">Business rules</p><h2>Configure your pricing</h2></div><span id="save-state" class="status">Saved in this browser</span></div><div class="settings-grid"><label>Business name<input id="business-name" value="My Business"></label><label>Currency<select id="currency"><option>USD</option><option>CAD</option><option>EUR</option><option>GBP</option></select></label></div>
+<div class="builder-section"><div class="section-heading"><div><h3>Services</h3><p>What can someone request?</p></div><button id="add-service">+ Add service</button></div><div id="services" class="editor-list"></div></div>
+<div class="builder-section"><div class="section-heading"><div><h3>Customer questions</h3><p>What details affect the price?</p></div><button id="add-input">+ Add question</button></div><div id="inputs" class="editor-list"></div></div>
+<div class="builder-section"><div class="section-heading"><div><h3>Pricing rules</h3><p>When and how should the price change?</p></div><button id="add-rule">+ Add rule</button></div><div id="rules" class="editor-list"></div></div><div class="next-bar"><div><strong>Ready to try it?</strong><span>Test this setup as a customer.</span></div><button data-go="preview">Preview customer quote →</button></div></section>
+<section id="preview" class="panel"><div class="panel-heading"><div><p class="eyebrow">Customer experience</p><h2 id="preview-title">Request an estimate</h2></div><span class="status">Calculated locally</span></div><div class="quote-workspace"><form id="quote-form"><label>Service<select id="quote-item"></select></label><label>Quantity<input id="quote-quantity" type="number" value="1" min="1" step="1"></label><div id="quote-fields"></div></form><div class="quote-result" aria-live="polite"><p class="eyebrow">Itemized estimate</p><div id="quote-lines"></div><div class="total"><span>Estimated total</span><strong id="quote-total">$0.00</strong></div><p id="quote-error" class="error"></p></div></div></section>
+<section id="transfer" class="panel"><div class="panel-heading"><div><p class="eyebrow">Portable configuration</p><h2>Save it or move it</h2></div></div><div class="transfer-grid"><article><h3>Export configuration</h3><p>Download the services, questions, and rules as JSON for reuse in another application.</p><button id="export-json">Download JSON</button></article><article><h3>Import configuration</h3><p>Restore a previous setup or load one created elsewhere.</p><label class="file-label">Choose JSON file<input id="import-json" type="file" accept="application/json,.json"></label></article><article><h3>Start over</h3><p>Clear this browser and return to a blank catalog.</p><button id="reset" class="danger">Reset builder</button></article></div><details><summary>Developer view: active configuration <span>+</span></summary><pre id="config"></pre></details></section>
+<section class="cta"><p class="eyebrow">Production integration</p><h2>This builder proves the rules. I can connect them to your real workflow.</h2><p>A finished version can live on your website, serve employees, send quote requests, accept payments, or connect to booking and CRM systems.</p><a href="https://clintramey.dev/#contact">Talk through your quoting process →</a></section>
+</main><script src="app.js"></script></body></html>
