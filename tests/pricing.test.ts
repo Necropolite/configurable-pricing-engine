@@ -162,3 +162,80 @@ test('rejects fractional monetary configuration', () => {
     /integer minor currency units/,
   );
 });
+
+
+test('applies configured input defaults before pricing rules', () => {
+  const result = calculateQuote(
+    {
+      currency: 'USD',
+      items: [{ id: 'visit', label: 'Visit', baseAmount: 5000 }],
+      inputs: [
+        { key: 'miles', label: 'Miles', type: 'number', defaultValue: 20 },
+      ],
+      rules: [
+        {
+          id: 'travel',
+          label: 'Travel',
+          type: 'per_unit',
+          input: 'miles',
+          rate: 100,
+          includedUnits: 10,
+        },
+      ],
+    },
+    { itemId: 'visit' },
+  );
+
+  assert.equal(result.total, 6000);
+});
+
+test('validates required, bounded, and select input values', () => {
+  const catalog: PricingCatalog = {
+    currency: 'USD',
+    items: [{ id: 'job', label: 'Job', baseAmount: 1000 }],
+    inputs: [
+      { key: 'hours', label: 'Hours', type: 'number', required: true, min: 1, max: 8 },
+      {
+        key: 'tier',
+        label: 'Tier',
+        type: 'select',
+        options: [
+          { label: 'Standard', value: 'standard' },
+          { label: 'Premium', value: 'premium' },
+        ],
+      },
+    ],
+  };
+
+  assert.throws(() => calculateQuote(catalog, { itemId: 'job' }), /hours is required/);
+  assert.throws(
+    () => calculateQuote(catalog, { itemId: 'job', attributes: { hours: 9 } }),
+    /cannot exceed 8/,
+  );
+  assert.throws(
+    () =>
+      calculateQuote(catalog, {
+        itemId: 'job',
+        attributes: { hours: 2, tier: 'unsupported' },
+      }),
+    /unsupported option/,
+  );
+});
+
+test('rejects invalid pricing input definitions', () => {
+  assert.throws(
+    () =>
+      calculateQuote(
+        {
+          currency: 'USD',
+          items: [{ id: 'job', label: 'Job', baseAmount: 1000 }],
+          inputs: [
+            { key: 'size', label: 'Size', type: 'number' },
+            { key: 'size', label: 'Duplicate', type: 'boolean' },
+          ],
+        },
+        { itemId: 'job' },
+      ),
+    /Duplicate pricing input key/,
+  );
+});
