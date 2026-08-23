@@ -239,3 +239,39 @@ test('rejects invalid pricing input definitions', () => {
     /Duplicate pricing input key/,
   );
 });
+
+
+test('scopes questions and rules to selected services', () => {
+  const scoped: PricingCatalog = {
+    currency: 'USD',
+    items: [
+      { id: 'repair', label: 'Repair', baseAmount: 10000 },
+      { id: 'consulting', label: 'Consulting', baseAmount: 15000 },
+    ],
+    inputs: [
+      { key: 'hours', label: 'Hours', type: 'number', required: true, itemIds: ['consulting'] },
+    ],
+    rules: [
+      { id: 'labor', label: 'Hourly labor', type: 'per_unit', input: 'hours', rate: 5000, itemIds: ['consulting'] },
+      { id: 'shop', label: 'Shop fee', type: 'fixed', amount: 2500, itemIds: ['repair'] },
+    ],
+  };
+
+  assert.equal(calculateQuote(scoped, { itemId: 'repair' }).total, 12500);
+  assert.equal(calculateQuote(scoped, { itemId: 'consulting', attributes: { hours: 2 } }).total, 25000);
+  assert.throws(() => calculateQuote(scoped, { itemId: 'consulting' }), /hours is required/);
+});
+
+test('rejects service scopes that reference unknown items', () => {
+  assert.throws(
+    () => calculateQuote(
+      {
+        currency: 'USD',
+        items: [{ id: 'known', label: 'Known', baseAmount: 1000 }],
+        rules: [{ id: 'bad', label: 'Bad', type: 'fixed', amount: 100, itemIds: ['missing'] }],
+      },
+      { itemId: 'known' },
+    ),
+    /unknown pricing item/,
+  );
+});
