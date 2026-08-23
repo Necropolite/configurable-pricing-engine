@@ -1,0 +1,189 @@
+# Configurable Pricing Engine
+
+A reusable, configuration-driven TypeScript engine for calculating transparent quotes from serializable pricing rules.
+
+This repository is the canonical source for the generic pricing engine originally extracted from `Necropolite/LocksmithOS`. LocksmithOS is one consumer of the engine, not the definition of it.
+
+## What it does
+
+The engine accepts:
+
+1. a pricing catalog describing items and pricing rules;
+2. a quote request containing an item, quantity, and generic attributes.
+
+It returns an itemized quote and final total.
+
+The core has no dependency on UI, maps, payments, databases, dispatch systems, React, Next.js, or any specific business domain.
+
+## Install for development
+
+```powershell
+npm install
+npm test
+npm run build
+```
+
+## Public API
+
+```ts
+import {
+  calculateQuote,
+  type PricingCatalog,
+  type QuoteRequest,
+  type QuoteResult,
+} from './src';
+```
+
+The supported package API is exported from `src/index.ts` and compiled to `dist/index.js` / `dist/index.d.ts` by `npm run build`.
+
+## Money
+
+All monetary values use integer minor units, such as cents, to avoid floating-point money errors.
+
+```ts
+8500 // $85.00
+```
+
+Each catalog declares its own currency code, such as `USD`.
+
+## Pricing model
+
+```ts
+interface PricingCatalog {
+  currency: string;
+  items: PricingItem[];
+  rules?: PricingRule[];
+}
+
+interface PricingItem {
+  id: string;
+  label: string;
+  baseAmount: number;
+  rules?: PricingRule[];
+}
+
+interface QuoteRequest {
+  itemId: string;
+  quantity?: number;
+  attributes?: Record<string, string | number | boolean>;
+}
+```
+
+V1 supports three rule types:
+
+- `fixed`: adds a fixed amount, optionally when a condition matches;
+- `per_unit`: charges a configured rate for a numeric attribute, optionally after included units;
+- `percentage`: adds a percentage of the running subtotal.
+
+Conditions support `eq`, `neq`, `gt`, `gte`, `lt`, and `lte`.
+
+Rules run in configured order. Catalog-level rules run before item-level rules. Percentage rules therefore calculate against the running subtotal at the point where they appear.
+
+## Example
+
+```ts
+import { calculateQuote, type PricingCatalog } from './src';
+
+const pricing: PricingCatalog = {
+  currency: 'USD',
+  items: [
+    { id: 'mow', label: 'Lawn mowing', baseAmount: 3000 },
+  ],
+  rules: [
+    {
+      id: 'acreage',
+      label: 'Additional acreage',
+      type: 'per_unit',
+      input: 'acres',
+      rate: 6000,
+      includedUnits: 0.5,
+    },
+    {
+      id: 'bagging',
+      label: 'Bag clippings',
+      type: 'fixed',
+      amount: 1500,
+      condition: {
+        attribute: 'bagClippings',
+        operator: 'eq',
+        value: true,
+      },
+    },
+  ],
+};
+
+const quote = calculateQuote(pricing, {
+  itemId: 'mow',
+  attributes: {
+    acres: 1.5,
+    bagClippings: true,
+  },
+});
+
+// quote.total === 10500
+```
+
+See `examples/lawn-service.ts` for the complete example.
+
+## Validation
+
+V1 rejects invalid configurations and requests instead of silently guessing. This includes:
+
+- unknown item IDs;
+- zero, negative, or non-finite quantity;
+- missing/non-numeric per-unit inputs;
+- negative per-unit inputs;
+- invalid or fractional monetary configuration;
+- incompatible numeric conditions;
+- duplicate item IDs.
+
+All calculated monetary line items are rounded to integer minor units.
+
+## Repository layout
+
+```text
+src/
+  index.ts       public API
+  engine.ts      calculation engine
+  types.ts       configuration and result types
+
+tests/
+  pricing.test.ts
+
+examples/
+  lawn-service.ts
+```
+
+## V1 scope
+
+Included:
+
+- configurable base prices;
+- quantity pricing;
+- fixed surcharges;
+- per-unit pricing with included allowances;
+- percentage modifiers;
+- simple conditional rules;
+- itemized quote results;
+- configuration/request validation;
+- multiple currency codes without currency conversion.
+
+Deliberately excluded until a real consumer requires them:
+
+- tax or jurisdiction lookup;
+- currency conversion;
+- coupons/promotions;
+- compound AND/OR condition trees;
+- persistence/databases;
+- payment processing;
+- map/distance calculation;
+- UI components;
+- arbitrary executable pricing callbacks.
+
+## Status
+
+**V1 extracted.** The same engine behavior was previously verified inside LocksmithOS with all pricing tests passing and a full Next.js production build succeeding. The standalone repository still needs its own fresh `npm install`, `npm test`, and `npm run build` after extraction before the extraction itself is marked independently verified.
+
+## Consumer integration
+
+Until a stable package distribution method is selected, consumers should not maintain independent feature development against copied engine code. Changes to the generic engine belong here first. Consumer-specific catalogs and adapters stay in their own repositories.
