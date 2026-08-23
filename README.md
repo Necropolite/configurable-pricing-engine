@@ -131,12 +131,14 @@ See `examples/lawn-service.ts` for the complete example.
 The browser application under `demo/` is a usable configuration layer around the engine. A business owner can:
 
 - create services and base prices;
-- define number and yes/no customer questions in the no-code builder;
+- define number, yes/no, and dropdown customer questions in the no-code builder;
 - add fixed, per-unit, conditional, and percentage rules;
 - preview the generated customer quote form;
 - see an itemized estimate calculated by the real engine;
 - save work automatically in the browser;
-- import and export portable JSON pricing configurations.
+- import and export portable JSON pricing configurations;
+- validate publishing blockers directly in the editor;
+- generate copyable embed code for a customer-facing quote form.
 
 The builder is intentionally separate from the calculation core. Applications can use the engine and input schema without adopting this interface.
 
@@ -147,6 +149,19 @@ npm run build:demo
 ```
 
 Then serve the repository root with any static server and open `demo/index.html`.
+
+## Product direction
+
+The engine remains a focused calculation package. Product capabilities are built around it in the browser application.
+
+**Current V1.2 milestone: publishable quote forms**
+
+- dropdown questions exposed in the builder;
+- proactive configuration-readiness feedback;
+- generated embed code for a customer-only quote form;
+- local, itemized calculation using the same engine and catalog.
+
+Future milestones should be driven by a real integration and may include opt-in hosted configurations, quote-request delivery, booking/CRM adapters, the Location Service Area Toolkit, and payments. These belong outside the core engine so generic pricing behavior stays portable and deterministic.
 
 ## Cloudflare deployment
 
@@ -216,6 +231,8 @@ Deliberately excluded until a real consumer requires them:
 - arbitrary executable pricing callbacks.
 
 ## Status
+
+**V1.2 publishable quote-form milestone added on August 23, 2026.** The builder now exposes dropdown questions, publishing validation, and generated embed code for a customer-facing form.
 
 **V1.1 pricing-input schema and browser builder added on August 23, 2026.** The input schema is optional, so existing V1 catalogs and LocksmithOS integration remain backward-compatible.
 
