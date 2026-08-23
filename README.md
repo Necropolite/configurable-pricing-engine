@@ -148,6 +148,17 @@ npm run build:demo
 
 Then serve the repository root with any static server and open `demo/index.html`.
 
+## Cloudflare deployment
+
+The browser builder is configured for Cloudflare Workers Static Assets. After authenticating Wrangler, deploy with:
+
+```powershell
+npm install
+npm run deploy
+```
+
+The deployment uploads the built `demo/` directory and returns the public `workers.dev` URL. Validate without publishing by running `npm run deploy:dry`.
+
 ## Validation
 
 V1 rejects invalid configurations and requests instead of silently guessing. This includes:
