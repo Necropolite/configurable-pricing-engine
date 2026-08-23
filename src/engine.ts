@@ -52,19 +52,28 @@ function assertCatalog(catalog: PricingCatalog) {
     }
     if (input.type === 'select' && input.options.length === 0) throw new Error(`Pricing input ${input.key} requires at least one option`);
   }
-  const itemIds = new Set<string>();
+  const catalogItemIds = new Set<string>();
   for (const item of catalog.items) {
     if (!item.id.trim()) throw new Error('Pricing item id is required');
     if (!item.label.trim()) throw new Error(`Pricing item ${item.id} requires a label`);
-    if (itemIds.has(item.id)) throw new Error(`Duplicate pricing item id: ${item.id}`);
-    itemIds.add(item.id); assertMoney(item.baseAmount, `Pricing item ${item.id} baseAmount`); item.rules?.forEach(assertRule);
+    if (catalogItemIds.has(item.id)) throw new Error(`Duplicate pricing item id: ${item.id}`);
+    catalogItemIds.add(item.id); assertMoney(item.baseAmount, `Pricing item ${item.id} baseAmount`); item.rules?.forEach(assertRule);
   }
+  const assertItemScope = (itemIds: string[] | undefined, label: string) => {
+    if (!itemIds) return;
+    if (itemIds.length === 0) throw new Error(`${label} itemIds cannot be empty`);
+    for (const itemId of itemIds) if (!catalogItemIds.has(itemId)) throw new Error(`${label} references unknown pricing item: ${itemId}`);
+  };
+  for (const input of catalog.inputs ?? []) assertItemScope(input.itemIds, `Pricing input ${input.key}`);
+  for (const rule of catalog.rules ?? []) assertItemScope(rule.itemIds, `Pricing rule ${rule.id}`);
+  for (const item of catalog.items) for (const rule of item.rules ?? []) assertItemScope(rule.itemIds, `Pricing rule ${rule.id}`);
   catalog.rules?.forEach(assertRule);
 }
 
-function prepareAttributes(inputs: PricingInput[] | undefined, supplied: Record<string, PricingValue>) {
+function prepareAttributes(inputs: PricingInput[] | undefined, supplied: Record<string, PricingValue>, itemId: string) {
   const attributes = { ...supplied };
   for (const input of inputs ?? []) {
+    if (input.itemIds && !input.itemIds.includes(itemId)) continue;
     if (attributes[input.key] === undefined && input.defaultValue !== undefined) attributes[input.key] = input.defaultValue;
     const value = attributes[input.key];
     if (value === undefined) {
@@ -80,7 +89,8 @@ function prepareAttributes(inputs: PricingInput[] | undefined, supplied: Record<
   }
   return attributes;
 }
-function applyRule(rule: PricingRule, attributes: Record<string, PricingValue>, runningSubtotal: number): QuoteLine | undefined {
+function applyRule(rule: PricingRule, attributes: Record<string, PricingValue>, runningSubtotal: number, itemId: string): QuoteLine | undefined {
+  if (rule.itemIds && !rule.itemIds.includes(itemId)) return undefined;
   if (rule.condition && !evaluateCondition(rule.condition, attributes)) return undefined;
   if (rule.type === 'fixed') return { id: rule.id, label: rule.label, kind: 'fixed', amount: rule.amount };
   if (rule.type === 'per_unit') {
@@ -97,11 +107,11 @@ export function calculateQuote(catalog: PricingCatalog, request: QuoteRequest): 
   if (!item) throw new Error(`Unknown pricing item: ${request.itemId}`);
   const quantity = request.quantity ?? 1;
   if (!Number.isFinite(quantity) || quantity <= 0) throw new Error('Quote quantity must be greater than zero and finite');
-  const attributes = prepareAttributes(catalog.inputs, request.attributes ?? {});
+  const attributes = prepareAttributes(catalog.inputs, request.attributes ?? {}, item.id);
   const lines: QuoteLine[] = [{ id: item.id, label: item.label, kind: quantity === 1 ? 'base' : 'quantity', amount: Math.round(item.baseAmount * quantity) }];
   let runningSubtotal = lines[0].amount;
   for (const rule of [...(catalog.rules ?? []), ...(item.rules ?? [])]) {
-    const line = applyRule(rule, attributes, runningSubtotal);
+    const line = applyRule(rule, attributes, runningSubtotal, item.id);
     if (line) { lines.push(line); runningSubtotal += line.amount; }
   }
   return { currency: catalog.currency, itemId: item.id, lines, subtotal: runningSubtotal, total: runningSubtotal };
