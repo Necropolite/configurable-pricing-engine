@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="Build a reusable pricing catalog and test the customer quote experience.">
   <link rel="canonical" href="https://pricing.clintramey.dev/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Clint Ramey">
   <meta property="og:title" content="Pricing Tool Builder | Clint Ramey">
@@ -32,4 +33,4 @@
 <section id="preview" class="panel"><div class="panel-heading"><div><p class="eyebrow">Customer experience</p><h2 id="preview-title">Request an estimate</h2></div><span class="status">Calculated locally</span></div><div class="quote-workspace"><form id="quote-form"><label>Service<select id="quote-item"></select></label><label>Quantity<input id="quote-quantity" type="number" value="1" min="1" step="1"></label><div id="quote-fields"></div></form><div class="quote-result" aria-live="polite"><p class="eyebrow">Itemized estimate</p><div id="quote-lines"></div><div class="total"><span>Estimated total</span><strong id="quote-total">$0.00</strong></div><p id="quote-error" class="error"></p></div></div></section>
 <section id="transfer" class="panel"><div class="panel-heading"><div><p class="eyebrow">Portable configuration</p><h2>Save it or move it</h2></div></div><div class="transfer-grid"><article><h3>Export configuration</h3><p>Download the services, questions, and rules as JSON for reuse in another application.</p><button id="export-json">Download JSON</button></article><article><h3>Import configuration</h3><p>Restore a previous setup or load one created elsewhere.</p><label class="file-label">Choose JSON file<input id="import-json" type="file" accept="application/json,.json"></label></article><article><h3>Start over</h3><p>Clear this browser and return to a blank catalog.</p><button id="reset" class="danger">Reset builder</button></article></div><details><summary>Developer view: active configuration <span>+</span></summary><pre id="config"></pre></details></section>
 <section class="cta"><p class="eyebrow">Production integration</p><h2>This quick example proves the pricing logic. A real implementation can match your workflow.</h2><p>The example is intentionally small and local. A custom version can support your actual rules, employees, customer requests, payments, booking, CRM, or other business systems.</p><a href="https://clintramey.dev/#contact">Talk through your quoting process →</a></section>
-</main><script src="app.js"></script></body></html>
+</main><script src="app.js" defer></script></body></html>

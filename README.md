@@ -165,6 +165,8 @@ npm run deploy
 
 The deployment uploads the built `demo/` directory and publishes it at [https://pricing.clintramey.dev](https://pricing.clintramey.dev) through the Wrangler-managed custom domain. Validate without publishing by running `npm run deploy:dry`.
 
+The focused demo does not register a service worker or advertise installability. Offline caching is optional application work rather than a requirement for this static example.
+
 ## Validation
 
 V1 rejects invalid configurations and requests instead of silently guessing. This includes:
