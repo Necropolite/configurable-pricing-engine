@@ -184,7 +184,7 @@ Included:
 - configurable base prices;
 - quantity pricing;
 - fixed surcharges;
-- per-unit pricing with included allowances;
+- hourly and other per-unit pricing with included allowances;
 - percentage modifiers;
 - simple conditional rules;
 - optional number, yes/no, and select input definitions for generated interfaces;
