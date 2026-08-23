@@ -163,7 +163,7 @@ npm install
 npm run deploy
 ```
 
-The deployment uploads the built `demo/` directory and returns the public `workers.dev` URL. Validate without publishing by running `npm run deploy:dry`.
+The deployment uploads the built `demo/` directory and publishes it at [https://pricing.clintramey.dev](https://pricing.clintramey.dev) through the Wrangler-managed custom domain. Validate without publishing by running `npm run deploy:dry`.
 
 ## Validation
 

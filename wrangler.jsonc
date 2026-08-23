@@ -2,8 +2,16 @@
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "pricing-tool-builder",
   "compatibility_date": "2026-08-23",
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [
+    {
+      "pattern": "pricing.clintramey.dev",
+      "custom_domain": true
+    }
+  ],
   "assets": {
     "directory": "./demo",
-    "not_found_handling": "single-page-application"
+    "not_found_handling": "404-page"
   }
 }
