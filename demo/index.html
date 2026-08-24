@@ -3,27 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#101310">
   <meta name="description" content="Build a reusable pricing catalog and test the customer quote experience.">
   <link rel="canonical" href="https://pricing.clintramey.dev/">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="https://clintramey.dev/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="https://clintramey.dev/apple-touch-icon.png">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Clint Ramey">
-  <meta property="og:title" content="Pricing Tool Builder | Clint Ramey">
+  <meta property="og:title" content="Configurable Pricing Engine | Clint Ramey">
   <meta property="og:description" content="Build a reusable pricing catalog and test the customer quote experience.">
   <meta property="og:url" content="https://pricing.clintramey.dev/">
   <meta property="og:image" content="https://clintramey.dev/assets/social-card-v2.png">
   <meta property="og:image:alt" content="Clint Ramey — websites, workflow automation, and custom software">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Pricing Tool Builder | Clint Ramey">
+  <meta name="twitter:title" content="Configurable Pricing Engine | Clint Ramey">
   <meta name="twitter:description" content="Build a reusable pricing catalog and test the customer quote experience.">
   <meta name="twitter:image" content="https://clintramey.dev/assets/social-card-v2.png">
   <meta name="twitter:image:alt" content="Clint Ramey — websites, workflow automation, and custom software">
-  <title>Pricing Tool Builder | Clint Ramey</title>
+  <title>Configurable Pricing Engine | Clint Ramey</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <main>
-<header><a class="brand" href="https://clintramey.dev">Clint Ramey <span>/ Pricing Tool Builder</span></a><div><button id="load-example" class="text-button">Load example</button></div></header>
+<header><a class="brand" href="https://clintramey.dev" aria-label="Clint Ramey portfolio home"><picture><source media="(max-width: 600px)" srcset="https://clintramey.dev/assets/brand/clintramey-monogram.png"><img src="https://clintramey.dev/assets/brand/clintramey-logo.png" width="1967" height="378" alt=""></picture><span>/ Configurable Pricing Engine</span></a><div><button id="load-example" class="text-button">Load example</button></div></header>
 <section class="intro"><p class="eyebrow">Working pricing tool</p><h1>Build the rules once.<br><em>Quote consistently.</em></h1><p>Create services, customer questions, and pricing rules without editing code. Then test the exact itemized quote your customer or employee would see. This is a focused example of the underlying system, not a limit on the workflows or integrations I can build.</p></section>
 <nav class="tabs" aria-label="Pricing tool views"><button class="active" data-tab="setup">1. Pricing setup</button><button data-tab="preview">2. Customer quote</button><button data-tab="transfer">3. Save or transfer</button></nav>
 <section id="setup" class="panel active"><div class="panel-heading"><div><p class="eyebrow">Business rules</p><h2>Configure your pricing</h2></div><span id="save-state" class="status">Saved in this browser</span></div><div class="setup-guide"><div><b>1. Add services</b><span>List what you sell and where each price starts.</span></div><div><b>2. Ask questions</b><span>Collect details that may change the price.</span></div><div><b>3. Add rules</b><span>Describe how those answers affect the quote.</span></div></div><div class="settings-grid"><label>Business name<input id="business-name" value="My Business"></label><label>Currency<select id="currency"><option>USD</option><option>CAD</option><option>EUR</option><option>GBP</option></select></label></div>

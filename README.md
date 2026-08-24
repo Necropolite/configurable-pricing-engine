@@ -126,7 +126,7 @@ const quote = calculateQuote(pricing, {
 
 See `examples/lawn-service.ts` for the complete example.
 
-## Pricing Tool Builder
+## Configurable Pricing Engine demo
 
 The browser application under `demo/` is a usable configuration layer around the engine. A business owner can:
 
